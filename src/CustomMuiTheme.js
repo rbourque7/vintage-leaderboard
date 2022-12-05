@@ -3,7 +3,16 @@ import { createTheme } from "@mui/material/styles";
 const getCustomMuiTheme = () => {
   const customTheme = createTheme({
     components: {
-
+      MuiButton: {
+        styleOverrides: {
+          root: {
+            fontFamily: "Montserrat",
+            fontSize: "1rem",
+            fontWeight: "bolder",
+            background: "#493E37"
+          },
+        },
+      },
     },
     palette: {
       type: "light",
@@ -24,6 +33,7 @@ const getCustomMuiTheme = () => {
       //medium #8E7A6B
       //dark #726256
       //darkest #493E37
+      //darkness #2E2823
     },
     typography: {
       fontFamily: "Montserrat",

@@ -6,8 +6,8 @@ import {
 } from "@mui/material";
 
 const Login = ({ setEmail }) => {
-    const [currEmailVal, setCurrEmailVal] = useState()
-    const [currPassVal, setCurrPassVal] = useState()
+    const [currEmailVal, setCurrEmailVal] = useState("")
+    const [currPassVal, setCurrPassVal] = useState("")
 
     const containerStyle = {
         display: "flex",
@@ -15,7 +15,7 @@ const Login = ({ setEmail }) => {
         flexDirection: "column",
         alignItems: "center",
         width: "100%",
-        height: "91vh",
+        height: "inherit",
     }
     const textFieldStyle = {
         mb: "1rem"
@@ -26,6 +26,12 @@ const Login = ({ setEmail }) => {
         justifyContent: "center",
         width: "20%",
     }
+    const loginBtnStyle = {
+        background: "#493E37",
+        "&:hover": {
+            background: "#726256",
+        }
+    }
 
     const attemptLogin = () => {
         const checkCreds = async () => {
@@ -35,15 +41,21 @@ const Login = ({ setEmail }) => {
                     currEmailVal,
                     currPassVal
                 );
-                console.log(user.user.email)
                 user && setEmail(user.user.email)
+                resetFields()
             } catch (error) {
                 console.log(error, "There is no user with this email or password");
+                resetFields()
             }
         }
         if (currEmailVal && currPassVal) {
             checkCreds()
         } else { console.log("Please enter login information") }
+    }
+
+    const resetFields = () => {
+        setCurrEmailVal("")
+        setCurrPassVal("")
     }
 
     return (
@@ -53,24 +65,24 @@ const Login = ({ setEmail }) => {
             </Typography>
             <Box sx={inputAreaStyle}>
                 <TextField
+                    value={currEmailVal}
                     sx={textFieldStyle}
                     placeholder="Required"
                     label="Email"
-                    defaultValue=""
                     variant="filled"
                     size="small"
                     onChange={(e) => setCurrEmailVal(e.target.value)}
                 />
                 <TextField
+                    value={currPassVal}
                     sx={textFieldStyle}
                     placeholder="Required"
                     label="Password"
-                    defaultValue=""
                     variant="filled"
                     size="small"
                     onChange={(e) => setCurrPassVal(e.target.value)}
                 />
-                <Button variant="contained" onClick={() => attemptLogin()}>Login</Button>
+                <Button variant="contained" sx={loginBtnStyle} onClick={() => attemptLogin()}>Login</Button>
             </Box>
         </Box>
     );
