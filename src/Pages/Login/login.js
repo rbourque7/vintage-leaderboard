@@ -8,6 +8,7 @@ import {
 const Login = ({ setEmail }) => {
     const [currEmailVal, setCurrEmailVal] = useState("")
     const [currPassVal, setCurrPassVal] = useState("")
+    const [showPassword, setShowPassword] = useState(false);
 
     const containerStyle = {
         display: "flex",
@@ -18,7 +19,15 @@ const Login = ({ setEmail }) => {
         height: "inherit",
     }
     const textFieldStyle = {
-        mb: "1rem"
+        mb: "1rem",
+        '& label.Mui-focused': {
+            color: '#2E2823',
+        },
+        '& .MuiFilledInput-underline:before': { borderBottomColor: '#2E2823' },
+        '& .MuiFilledInput-underline:after': { borderBottomColor: '#2E2823' },
+        '& :-webkit-autofill': {
+            transitionDelay: "9999s"
+        },
     }
     const inputAreaStyle = {
         display: "flex",
@@ -74,6 +83,7 @@ const Login = ({ setEmail }) => {
                     onChange={(e) => setCurrEmailVal(e.target.value)}
                 />
                 <TextField
+                    type={showPassword ? "text" : "password"}
                     value={currPassVal}
                     sx={textFieldStyle}
                     placeholder="Required"
@@ -82,6 +92,7 @@ const Login = ({ setEmail }) => {
                     size="small"
                     onChange={(e) => setCurrPassVal(e.target.value)}
                 />
+                <Button variant="contained" onClick={() => setShowPassword(s => !s)}>Toggle visibility</Button>
                 <Button variant="contained" sx={loginBtnStyle} onClick={() => attemptLogin()}>Login</Button>
             </Box>
         </Box>

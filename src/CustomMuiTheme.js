@@ -46,17 +46,17 @@ const getCustomMuiTheme = () => {
         fontSize: "1.2rem",
       },
       h1: {
-        fontSize: "1.75rem",
+        fontSize: "1.50rem",
         fontWeight: 950,
         marginBottom: "1rem",
       },
       h2: {
-        fontSize: "1.5rem",
+        fontSize: "1.30rem",
         fontWeight: 950,
         marginBottom: "1rem",
       },
       h3: {
-        fontSize: "1.25rem",
+        fontSize: "1.20rem",
         fontWeight: 500,
       },
       subtitle1: {

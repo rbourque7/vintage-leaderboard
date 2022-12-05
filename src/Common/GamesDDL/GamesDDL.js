@@ -19,8 +19,8 @@ const GamesDDL = ({ games, currGame, setCurrGame }) => {
             style: {
                 maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
                 width: 250,
-                background: "#726256",
-                color: "#FFF",
+                background: "#8E7A6B",
+                color: "#2E2823",
             },
         },
     };

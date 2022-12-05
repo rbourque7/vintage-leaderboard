@@ -22,8 +22,10 @@ const App = () => {
   const [email, setEmail] = useState()
   const [users, setUsers] = useState([])
   const [games, setGames] = useState(undefined)
+  const [scores, setScores] = useState(undefined)
   const usersCollectionRef = collection(db, "users")
   const gamesCollectionRef = collection(db, "games")
+  const scoresCollectionRef = collection(db, "scoresList")
 
   const logoutBtnStyle = {
     height: "100%",
@@ -32,6 +34,16 @@ const App = () => {
     "&:hover": {
       background: "#726256",
     }
+  }
+  const fancyTitleBoxStyle = {
+    width: "15%",
+    height: "2rem",
+    background: "#8E7A6B",
+    zIndex: "10000",
+    position: "relative",
+    right: "8%",
+    top: "75%",
+    borderRadius: "0 0 20px 20px"
   }
 
   useEffect(() => {
@@ -53,17 +65,19 @@ const App = () => {
   }, [email])
 
   useEffect(() => {
-    const getGames = async () => {
+    const getGamesAndScores = async () => {
       const data = await getDocs(gamesCollectionRef)
       setGames(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
+      const scoreData = await getDocs(scoresCollectionRef)
+      console.log(scoreData)
+      setScores(scoreData.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
     }
-    currUser.id && getGames()
+    currUser.id && getGamesAndScores()
   }, [currUser])
 
   useEffect(() => {
-    console.log(games)
-    games !== undefined && setPageState("main")
-  }, [games])
+    games !== undefined && scores !== undefined && setPageState("main")
+  }, [games, scores])
 
   const logout = () => {
     setCurrUser(DEFAULT_USER_INFO)
@@ -73,11 +87,16 @@ const App = () => {
   return (
     <div className="App">
       <div className='headerStyle'>
-        <Typography color="#2E2823" variant="h3">header</Typography>
+        <Typography color="#2E2823" variant="h3">Vintage Leaderboard</Typography>
+        {pageState === "main" && <Box sx={fancyTitleBoxStyle}>
+          <Typography color="#2E2823" variant="body1">Recent Scores</Typography>
+        </Box>}
         {pageState !== "login" && <Button variant="contained" sx={logoutBtnStyle} onClick={() => logout()}>Log Out</Button>}
       </div>
-      {pageState === "login" && <Login setEmail={setEmail} />}
-      {pageState === "main" && <Main currUser={currUser} games={games} />}
+      <div className="Body">
+        {pageState === "login" && <Login setEmail={setEmail} />}
+        {pageState === "main" && <Main currUser={currUser} users={users} games={games} scores={scores} />}
+      </div>
     </div>
   );
 }
