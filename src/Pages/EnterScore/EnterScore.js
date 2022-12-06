@@ -76,6 +76,7 @@ const EnterScore = ({ currUser, setPageState, games }) => {
     }
     const submitBtnStyle = {
         height: "2rem",
+        mt: "2rem",
         width: 500,
         fontWeight: 600,
         background: "#493E37",
