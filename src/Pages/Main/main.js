@@ -12,7 +12,7 @@ import BookmarkIcon from '@mui/icons-material/Bookmark';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 
 
-const Main = ({ currUser, users, games, scores }) => {
+const Main = ({ currUser, users, games, scores, setPageState }) => {
     const [currGame, setCurrGame] = useState(games[0])
     const [currScoresList, setCurrScoresList] = useState([])
     const containerStyle = {
@@ -132,12 +132,12 @@ const Main = ({ currUser, users, games, scores }) => {
     }
     const tileStyle = {
         display: "flex",
-        justifyContent: "space-around",
+        justifyContent: "center",
         width: "100%",
         height: "2rem",
         borderRadius: "10px",
         alignItems: "center",
-        padding: "0.5rem",
+        padding: "1rem",
     }
     const tilesStyle = {
         width: "100%",
@@ -156,6 +156,9 @@ const Main = ({ currUser, users, games, scores }) => {
             background: "#2E2823"
         }
     }
+    const boldStyle = {
+        fontWeight: 500
+    }
 
     useEffect(() => {
         if (scores.length) {
@@ -164,7 +167,10 @@ const Main = ({ currUser, users, games, scores }) => {
                 const temp = scores.find((score) => score.gameId === currGame.id)
                 temp && setCurrScoresList(temp)
             }
-            temp && setCurrScoresList(temp)
+            let sorted = temp.sort((a, b) => {
+                return b.score - a.score
+            })
+            temp && setCurrScoresList(sorted)
         }
     }, [currGame])
 
@@ -177,7 +183,7 @@ const Main = ({ currUser, users, games, scores }) => {
     }
 
     const handleCreateClick = () => {
-        console.log("clicked")
+        setPageState("enterScore")
     }
 
     const handleAdminSettingClick = () => {
@@ -191,7 +197,7 @@ const Main = ({ currUser, users, games, scores }) => {
                     {
                         scores.slice(-4).map((score, index) => (
                             <Box sx={index !== 1 ? newScoreBoxStyle : addMarginStyle}>
-                                <Typography variant="h4" color="#2E2823">
+                                <Typography variant="h4" sx={boldStyle} color="#2E2823">
                                     {users.find((user) => user.id === score.userId).firstName}
                                 </Typography>
                                 <Box sx={newScoreStyle}>
@@ -214,29 +220,19 @@ const Main = ({ currUser, users, games, scores }) => {
                     </Typography>
                     <GamesDDL games={games} currGame={currGame} setCurrGame={setCurrGame} />
                     <ReBox style={leaderboardStyle}>
-                        {console.log(currScoresList)}
+
+                        <Box sx={tileStyle}>
+                            <Typography variant="h4" color="#2E2823">
+                                {currGame.name + " " + "Highscores"}
+                            </Typography>
+                        </Box>
                         {currScoresList.length > 0 ?
-                            <>
-                                <Box sx={tileStyle}>
-                                    <Typography variant="body1" color="#2E2823">
-                                        Ranking
-                                    </Typography>
-                                    <Typography variant="body1" color="#2E2823">
-                                        Name
-                                    </Typography>
-                                    <Typography variant="body1" color="#2E2823">
-                                        Game
-                                    </Typography>
-                                    <Typography variant="body1" color="#2E2823">
-                                        Score
-                                    </Typography>
-                                </Box>
-                                <Box sx={tilesStyle}>
-                                    {currScoresList.map((score, index) => (
-                                        <LeaderboardTile score={score} users={users} index={index} />
-                                    ))}
-                                </Box>
-                            </>
+                            <Box sx={tilesStyle}>
+                                {currScoresList.map((score, index) => (
+                                    <LeaderboardTile score={score} users={users} index={index} />
+                                ))}
+                            </Box>
+
                             :
                             <Typography variant="body1" color="#2E2823">
                                 There are no recorded scores for this game.

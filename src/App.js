@@ -4,8 +4,9 @@ import { db } from "./Firebase/Firebase"
 import { collection, getDocs } from "firebase/firestore"
 import Main from "./Pages/Main/Main"
 import Login from "./Pages/Login/Login"
+import EnterScore from "./Pages/EnterScore/EnterScore";
 import {
-  Box, Typography, TextField, Button
+  Box, Typography, TextField, Button, ThemeProvider
 } from "@mui/material";
 
 const App = () => {
@@ -30,6 +31,7 @@ const App = () => {
   const logoutBtnStyle = {
     height: "100%",
     width: "16rem",
+    fontWeight: 600,
     background: "#493E37",
     "&:hover": {
       background: "#726256",
@@ -41,9 +43,16 @@ const App = () => {
     background: "#8E7A6B",
     zIndex: "10000",
     position: "relative",
-    right: "8%",
+    right: "3%",
     top: "75%",
     borderRadius: "0 0 20px 20px"
+  }
+  const titleStyle = {
+    fontWeight: 500,
+    fontSize: "2rem"
+  }
+  const boldStyle = {
+    fontWeight: 500,
   }
 
   useEffect(() => {
@@ -87,15 +96,16 @@ const App = () => {
   return (
     <div className="App">
       <div className='headerStyle'>
-        <Typography color="#2E2823" variant="h3">Vintage Leaderboard</Typography>
+        <Typography color="#2E2823" variant="h3" sx={titleStyle}>Vintage Leaderboard</Typography>
         {pageState === "main" && <Box sx={fancyTitleBoxStyle}>
-          <Typography color="#2E2823" variant="body1">Recent Scores</Typography>
+          <Typography color="#2E2823" variant="body1" sx={boldStyle}>Recent Scores</Typography>
         </Box>}
         {pageState !== "login" && <Button variant="contained" sx={logoutBtnStyle} onClick={() => logout()}>Log Out</Button>}
       </div>
       <div className="Body">
         {pageState === "login" && <Login setEmail={setEmail} />}
-        {pageState === "main" && <Main currUser={currUser} users={users} games={games} scores={scores} />}
+        {pageState === "main" && <Main currUser={currUser} users={users} games={games} scores={scores} setPageState={setPageState} />}
+        {pageState === "enterScore" && <EnterScore currUser={currUser} setPageState={setPageState} games={games} />}
       </div>
     </div>
   );

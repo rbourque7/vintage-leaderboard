@@ -21,7 +21,7 @@ const Login = ({ setEmail }) => {
     const textFieldStyle = {
         mb: "1rem",
         '& label.Mui-focused': {
-            color: '#2E2823',
+            color: '#B19886',
         },
         '& .MuiFilledInput-underline:before': { borderBottomColor: '#2E2823' },
         '& .MuiFilledInput-underline:after': { borderBottomColor: '#2E2823' },
