@@ -5,6 +5,7 @@ import {
 } from "@mui/material";
 
 const GamesDDL = ({ games, currGame, setCurrGame }) => {
+    const filtGames = [{ id: 0, name: "Choose a Game" }, ...games]
     const selectStyle = {
         background: "#8E7A6B",
         color: "#2E2823",
@@ -34,7 +35,7 @@ const GamesDDL = ({ games, currGame, setCurrGame }) => {
         const {
             target: { value },
         } = event;
-        let game = games.find((game) => game.name === value)
+        let game = filtGames.find((game) => game.name === value)
         setCurrGame(game)
     }
 
@@ -49,7 +50,7 @@ const GamesDDL = ({ games, currGame, setCurrGame }) => {
                 onChange={handleGameChange}
                 MenuProps={MenuProps}
             >
-                {games.map((game) => (
+                {filtGames.map((game) => (
                     <MenuItem
                         key={game.id}
                         value={game.name}

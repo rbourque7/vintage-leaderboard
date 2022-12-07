@@ -8,8 +8,10 @@ import EnterScore from "./Pages/EnterScore/EnterScore";
 import {
   Box, Typography, TextField, Button, ThemeProvider
 } from "@mui/material";
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 const App = () => {
+  const mobileView = useMediaQuery('(max-width:500px)');
   const DEFAULT_USER_INFO = {
     id: undefined,
     email: undefined,
@@ -25,12 +27,10 @@ const App = () => {
   const [games, setGames] = useState(undefined)
   const [scores, setScores] = useState(undefined)
   const usersCollectionRef = collection(db, "users")
-  const gamesCollectionRef = collection(db, "games")
-  const scoresCollectionRef = collection(db, "scoresList")
 
   const logoutBtnStyle = {
     height: "100%",
-    width: "16rem",
+    width: mobileView ? "11rem" : "16rem",
     fontWeight: 600,
     background: "#493E37",
     "&:hover": {
@@ -38,21 +38,21 @@ const App = () => {
     }
   }
   const fancyTitleBoxStyle = {
-    width: "15%",
+    width: "18%",
     height: "2rem",
     background: "#8E7A6B",
     zIndex: "10000",
     position: "relative",
-    right: "3%",
+    left: mobileView ? "0" : "2.5%",
     top: "75%",
     borderRadius: "0 0 20px 20px"
   }
-  const titleStyle = {
-    fontWeight: 500,
-    fontSize: "2rem"
-  }
   const boldStyle = {
     fontWeight: 500,
+  }
+  const logoStyle = {
+    width: "10rem",
+    height: "3.5rem",
   }
 
   useEffect(() => {
@@ -74,19 +74,8 @@ const App = () => {
   }, [email])
 
   useEffect(() => {
-    const getGamesAndScores = async () => {
-      const data = await getDocs(gamesCollectionRef)
-      setGames(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
-      const scoreData = await getDocs(scoresCollectionRef)
-      console.log(scoreData)
-      setScores(scoreData.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
-    }
-    currUser.id && getGamesAndScores()
+    currUser.id && setPageState("main")
   }, [currUser])
-
-  useEffect(() => {
-    games !== undefined && scores !== undefined && setPageState("main")
-  }, [games, scores])
 
   const logout = () => {
     setCurrUser(DEFAULT_USER_INFO)
@@ -96,16 +85,20 @@ const App = () => {
   return (
     <div className="App">
       <div className='headerStyle'>
-        <Typography color="#2E2823" variant="h3" sx={titleStyle}>Vintage Leaderboard</Typography>
+        <img
+          alt="logo"
+          src="./Images/logoVL2.png"
+          style={logoStyle}
+        />
         {pageState === "main" && <Box sx={fancyTitleBoxStyle}>
-          <Typography color="#2E2823" variant="body1" sx={boldStyle}>Recent Scores</Typography>
+          <Typography color="#2E2823" variant="body1" sx={boldStyle}>{mobileView ? "Recent" : "Recent Scores"}</Typography>
         </Box>}
         {pageState !== "login" && <Button variant="contained" sx={logoutBtnStyle} onClick={() => logout()}>Log Out</Button>}
       </div>
       <div className="Body">
         {pageState === "login" && <Login setEmail={setEmail} />}
-        {pageState === "main" && <Main currUser={currUser} users={users} games={games} scores={scores} setPageState={setPageState} />}
-        {pageState === "enterScore" && <EnterScore currUser={currUser} setPageState={setPageState} games={games} />}
+        {pageState === "main" && <Main currUser={currUser} users={users} games={games} scores={scores} setGames={setGames} setScores={setScores} setPageState={setPageState} />}
+        {pageState === "enterScore" && <EnterScore currUser={currUser} setPageState={setPageState} games={games} scores={scores} />}
       </div>
     </div>
   );
