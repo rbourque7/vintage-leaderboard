@@ -24,8 +24,8 @@ const App = () => {
   const [currUser, setCurrUser] = useState(DEFAULT_USER_INFO)
   const [email, setEmail] = useState()
   const [users, setUsers] = useState([])
-  const [games, setGames] = useState(undefined)
-  const [scores, setScores] = useState(undefined)
+  const [games, setGames] = useState([])
+  const [scores, setScores] = useState([])
   const usersCollectionRef = collection(db, "users")
 
   const logoutBtnStyle = {
@@ -79,6 +79,7 @@ const App = () => {
 
   const logout = () => {
     setCurrUser(DEFAULT_USER_INFO)
+    setEmail("")
     setPageState("login")
   }
 
