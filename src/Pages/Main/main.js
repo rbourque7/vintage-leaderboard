@@ -55,9 +55,8 @@ const Main = ({ currUser, users, games, scores, setPageState, setGames, setScore
         mr: "10%",
     }
     const newScoreStyle = {
-        display: "flex",
+        display: mobileView ? "column" : "flex",
         justifyContent: "center",
-
     }
     const scoreTextStyle = {
         fontSize: mobileView ? "0.85rem" : "1rem",

@@ -19,7 +19,7 @@ const EnterScore = ({ currUser, setPageState, games, scores }) => {
     const scoresCollectionRef = collection(db, "scoresList")
     const containerStyle = {
         width: mobileView ? "auto" : "100%",
-        height: "91vh",
+        height: mobileView ? "89.25vh" : "91vh",
         display: "flex",
         flexDirection: "column",
         mt: "2rem",
