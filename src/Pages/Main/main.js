@@ -135,7 +135,7 @@ const Main = ({ currUser, users, games, scores, setPageState, setGames, setScore
         width: mobileView ? "90%" : "75%",
         padding: "0 1rem 1.5rem 1rem",
         background: "#726256",
-        mt: "1rem",
+        mt: mobileView ? "0.5rem" : "1rem",
         height: mobileView ? "25rem" : "62.5%",
         display: "flex",
         flexDirection: "column",
@@ -224,7 +224,7 @@ const Main = ({ currUser, users, games, scores, setPageState, setGames, setScore
     }
 
     const handleBookmarkClick = () => {
-        console.log("clicked")
+        setPageState("bookmark")
     }
 
     const handleCreateClick = () => {
@@ -260,9 +260,16 @@ const Main = ({ currUser, users, games, scores, setPageState, setGames, setScore
             }
             <Box sx={mainAreaStyle}>
                 <Box sx={leaderboarAreaStyle}>
-                    <Typography variant="h4" color="#2E2823" sx={boldStyle}>
-                        Leaderboard
-                    </Typography>
+                    {mobileView &&
+                        <Typography variant="h4" color="#2E2823" sx={{ fontWeight: 500 }}>
+                            Welcome, {currUser.firstName}
+                        </Typography>
+                    }
+                    {!mobileView &&
+                        <Typography variant="h4" color="#2E2823" sx={{ fontWeight: 500, mt: "0.5rem" }}>
+                            Leaderboard
+                        </Typography>
+                    }
                     {isLoading ? <CircularProgress /> : <GamesDDL games={games} currGame={currGame} setCurrGame={setCurrGame} />}
                     <ReBox style={leaderboardStyle}>
                         {!isLoading ?
@@ -290,6 +297,11 @@ const Main = ({ currUser, users, games, scores, setPageState, setGames, setScore
                     </ReBox>
                 </Box>
                 <Box sx={navBoxStyle}>
+                    {!mobileView &&
+                        <Typography variant="h4" color="#2E2823" sx={{ fontWeight: 500, mb: "0.5rem" }}>
+                            Welcome, {currUser.firstName}
+                        </Typography>
+                    }
                     <Box sx={navPStyle}>
                         <ReBox style={navBtnStyle} button={true} clickHandler={() => handleSettingClick()}>
                             <SettingsIcon fontSize="large" sx={iconStyle} />

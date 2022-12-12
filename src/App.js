@@ -5,6 +5,7 @@ import { collection, getDocs } from "firebase/firestore"
 import Main from "./Pages/Main/Main"
 import Login from "./Pages/Login/Login"
 import EnterScore from "./Pages/EnterScore/EnterScore";
+import Bookmark from "./Pages/Bookmark/Bookmark";
 import {
   Box, Typography, TextField, Button, ThemeProvider
 } from "@mui/material";
@@ -100,6 +101,7 @@ const App = () => {
         {pageState === "login" && <Login setEmail={setEmail} />}
         {pageState === "main" && <Main currUser={currUser} users={users} games={games} scores={scores} setGames={setGames} setScores={setScores} setPageState={setPageState} />}
         {pageState === "enterScore" && <EnterScore currUser={currUser} setPageState={setPageState} games={games} scores={scores} />}
+        {pageState === "bookmark" && <Bookmark currUser={currUser} setPageState={setPageState} games={games} />}
       </div>
     </div>
   );
