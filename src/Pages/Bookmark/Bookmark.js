@@ -12,6 +12,9 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 const Bookmark = ({ currUser, games, setPageState }) => {
     const mobileView = useMediaQuery('(max-width:500px)');
     const [gamesList, setGamesList] = useState(games)
+    const [userGamesList, setUserGamesList] = useState([])
+
+    const bookmarkCollectionRef = collection(db, "bookmarkList")
     const containerStyle = {
         width: mobileView ? "auto" : "100%",
         height: mobileView ? "89.25vh" : "91vh",
@@ -29,7 +32,7 @@ const Bookmark = ({ currUser, games, setPageState }) => {
         alignItems: "center",
         flexDirection: "column",
         borderRadius: "10px",
-        boxShadow: "0px 2px 3px 1px #2E2823",
+        boxShadow: "0px 2px 3px 1px #42291A",
     }
     const bookmarkBoxesStyle = {
         mt: "1rem",
@@ -61,19 +64,24 @@ const Bookmark = ({ currUser, games, setPageState }) => {
         justifyContent: "flex-start",
         width: "100%",
         borderRadius: "4px",
-        boxShadow: "0px 2px 3px 1px #2E2823",
-        background: "#2E2823",
+        boxShadow: "0px 2px 3px 1px #493E37",
+        background: "#493E37",
         height: "2.5rem",
-        borderBottom: "1px solid #726256"
+        borderBottom: "1px solid #2E2823"
     }
     const logoStyle = {
         width: "1.5rem",
         height: "1.5rem",
     }
 
+    useEffect(() => {
+
+    }, [currUser])
+
     const backToHome = () => {
         setPageState("main")
     }
+
     const addBoookmarkGame = () => {
 
     }
@@ -108,7 +116,7 @@ const Bookmark = ({ currUser, games, setPageState }) => {
                                                     style={logoStyle}
                                                 />
                                             </Box>
-                                            <Typography variant="body1" color="#B19886" sx={{ fontWeight: 500, ml: "1rem", mt: "0.25rem" }}>
+                                            <Typography variant="body1" color="#EAFDF8" sx={{ fontWeight: 500, ml: "1rem", mt: "0.25rem" }}>
                                                 {game.name}
                                             </Typography>
                                         </Button>

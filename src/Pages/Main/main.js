@@ -92,6 +92,7 @@ const Main = ({ currUser, users, games, scores, setPageState, setGames, setScore
         flexWrap: "wrap",
         borderRadius: "10px",
         boxShadow: "0px 2px 3px 1px #2E2823",
+        mb: mobileView && "2rem",
     }
     const navBtnStyle = {
         display: "flex",

@@ -9,7 +9,7 @@ const getCustomMuiTheme = () => {
             fontFamily: "Montserrat",
             fontSize: "1rem",
             fontWeight: "bolder",
-            background: "#493E37"
+            background: "#5D4035"
           },
         },
       },
@@ -34,6 +34,7 @@ const getCustomMuiTheme = () => {
       //dark #726256
       //darkest #493E37
       //darkness #2E2823
+
     },
     typography: {
       fontFamily: "Montserrat",
