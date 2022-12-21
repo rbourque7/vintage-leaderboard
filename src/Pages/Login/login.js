@@ -25,7 +25,7 @@ const Login = ({ setEmail }) => {
         mb: "1rem",
         width: "100%",
         '& label.Mui-focused': {
-            color: '#B19886',
+            color: '#2E2823',
         },
         '& .MuiFilledInput-underline:before': { borderBottomColor: '#2E2823' },
         '& .MuiFilledInput-underline:after': { borderBottomColor: '#2E2823' },

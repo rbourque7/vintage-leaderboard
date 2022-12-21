@@ -6,12 +6,16 @@ import {
 
 const GamesDDL = ({ games, currGame, setCurrGame }) => {
     const filtGames = [{ id: 0, name: "Choose a Game" }, ...games]
+    const formStyle = {
+        m: 1,
+        width: 300,
+    }
     const selectStyle = {
         background: "#8E7A6B",
         color: "#2E2823",
         "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
             borderColor: "#493E37",
-        }
+        },
     }
     const ITEM_HEIGHT = 48;
     const ITEM_PADDING_TOP = 8;
@@ -40,7 +44,7 @@ const GamesDDL = ({ games, currGame, setCurrGame }) => {
     }
 
     return (
-        <FormControl sx={{ m: 1, width: 300 }}>
+        <FormControl sx={formStyle}>
             <InputLabel id="game-ddl-label" sx={labelStyle}>Games</InputLabel>
             <Select
                 id="game-ddl-label"

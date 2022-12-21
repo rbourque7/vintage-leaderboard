@@ -225,7 +225,7 @@ const Main = ({ currUser, users, games, scores, setPageState, setGames, setScore
     }
 
     const handleBookmarkClick = () => {
-        setPageState("bookmark")
+        setPageState("recent")
     }
 
     const handleCreateClick = () => {
