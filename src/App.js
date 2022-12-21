@@ -78,6 +78,10 @@ const App = () => {
     currUser.id && setPageState("main")
   }, [currUser])
 
+  const goHome = () => {
+    currUser.id && setPageState("main")
+  }
+
   const logout = () => {
     setCurrUser(DEFAULT_USER_INFO)
     setEmail("")
@@ -87,11 +91,13 @@ const App = () => {
   return (
     <div className="App">
       <div className='headerStyle'>
-        <img
-          alt="logo"
-          src="./Images/logoVL2.png"
-          style={logoStyle}
-        />
+        <Box onClick={() => goHome()} sx={{ cursor: "pointer" }}>
+          <img
+            alt="logo"
+            src="./Images/logoVL2.png"
+            style={logoStyle}
+          />
+        </Box>
         {pageState === "main" && <Box sx={fancyTitleBoxStyle}>
           <Typography color="#2E2823" variant="body1" sx={boldStyle}>{mobileView ? "Recent" : "Recent Scores"}</Typography>
         </Box>}
