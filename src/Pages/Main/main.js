@@ -10,6 +10,7 @@ import CreateIcon from '@mui/icons-material/Create';
 import SettingsIcon from '@mui/icons-material/Settings';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
+import RecentActorsIcon from '@mui/icons-material/RecentActors';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { collection, getDocs } from "firebase/firestore"
 
@@ -176,7 +177,7 @@ const Main = ({ currUser, users, games, scores, setPageState, setGames, setScore
     }
     const nameStyle = {
         fontWeight: 500,
-        fontSize: mobileView ? "1.75rem" : "2.125rem"
+        fontSize: mobileView ? "1.55rem" : "2.125rem"
     }
     const leaderTitleStyle = {
         fontSize: mobileView ? "1.5rem" : "2.125rem",
@@ -189,7 +190,9 @@ const Main = ({ currUser, users, games, scores, setPageState, setGames, setScore
             const data = await getDocs(gamesCollectionRef)
             setGames(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
             const scoreData = await getDocs(scoresCollectionRef)
-            setScores(scoreData.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
+            const sData = scoreData.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+            const sortedScores = sData?.sort((a, b) => b.date.seconds - a.date.seconds);
+            setScores(sortedScores)
         }
         currUser.id && getGamesAndScores()
     }, [currUser])
@@ -233,15 +236,30 @@ const Main = ({ currUser, users, games, scores, setPageState, setGames, setScore
     }
 
     const handleAdminSettingClick = () => {
-        console.log("clicked")
+        setPageState("admin")
     }
 
     return (
         <Box sx={containerStyle}>
             {scores && users &&
                 <ReBox style={recentScoresBoxStyle}>
-                    {
-                        scores.slice(mobileView ? -2 : -4).map((score, index) => (
+                    {mobileView ?
+                        scores.slice(0, 2).map((score, index) => (
+                            <Box sx={index !== 1 ? newScoreBoxStyle : !mobileView ? addMarginStyle : newScoreBoxStyle}>
+                                <Typography variant="h4" sx={nameStyle} color="#2E2823">
+                                    {users.find((user) => user.id === score.userId).firstName}
+                                </Typography>
+                                <Box sx={newScoreStyle}>
+                                    <Typography sx={scoreTextStyle} variant="body1" color="#2E2823">
+                                        {score.name}
+                                    </Typography>
+                                    <Typography sx={scoreTextStyle} variant="body1" color="#2E2823">
+                                        {score.score}
+                                    </Typography>
+                                </Box>
+                            </Box>
+                        )) :
+                        scores.slice(0, 4).map((score, index) => (
                             <Box sx={index !== 1 ? newScoreBoxStyle : !mobileView ? addMarginStyle : newScoreBoxStyle}>
                                 <Typography variant="h4" sx={nameStyle} color="#2E2823">
                                     {users.find((user) => user.id === score.userId).firstName}
@@ -257,6 +275,7 @@ const Main = ({ currUser, users, games, scores, setPageState, setGames, setScore
                             </Box>
                         ))
                     }
+
                 </ReBox>
             }
             <Box sx={mainAreaStyle}>
@@ -271,7 +290,7 @@ const Main = ({ currUser, users, games, scores, setPageState, setGames, setScore
                             Leaderboard
                         </Typography>
                     }
-                    {isLoading ? <CircularProgress /> : <GamesDDL games={games} currGame={currGame} setCurrGame={setCurrGame} />}
+                    {isLoading ? <CircularProgress /> : <GamesDDL games={games} currGame={currGame} setCurrGame={setCurrGame} placeholder="Select a game" />}
                     <ReBox style={leaderboardStyle}>
                         {!isLoading ?
                             <>
@@ -311,9 +330,9 @@ const Main = ({ currUser, users, games, scores, setPageState, setGames, setScore
                             </Typography>
                         </ReBox>
                         <ReBox style={navBtnStyle} button={true} clickHandler={() => handleBookmarkClick()}>
-                            <BookmarkIcon fontSize="large" sx={iconStyle} />
+                            <RecentActorsIcon fontSize="large" sx={iconStyle} />
                             <Typography variant="body1">
-                                Bookmark Games
+                                Recent Scores
                             </Typography>
                         </ReBox>
                         <ReBox style={currUser.isAdmin === false ? navBtnStyleC : navBtnStyle} button={true} clickHandler={() => handleCreateClick()}>

@@ -1,69 +1,76 @@
 import React, { useState, useEffect } from "react";
 import { db, auth } from "../../Firebase/Firebase"
 import {
-    Box, Typography, MenuItem, Select, OutlinedInput, FormControl, InputLabel
+    Box, Typography, MenuItem, Select, OutlinedInput, FormControl, InputLabel, Autocomplete, TextField
 } from "@mui/material";
 
-const GamesDDL = ({ games, currGame, setCurrGame }) => {
+const GamesDDL = ({ games, currGame, setCurrGame, placeholder }) => {
     const filtGames = [{ id: 0, name: "Choose a Game" }, ...games]
-    const formStyle = {
-        m: 1,
-        width: 300,
-    }
-    const selectStyle = {
+
+    const autoStyle = {
+        mt: "1rem",
         background: "#8E7A6B",
+        width: 250,
         color: "#2E2823",
         "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-            borderColor: "#493E37",
+            borderColor: "#2E2823",
         },
-    }
-    const ITEM_HEIGHT = 48;
-    const ITEM_PADDING_TOP = 8;
-    const MenuProps = {
-        PaperProps: {
-            style: {
-                maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-                width: 250,
-                background: "#8E7A6B",
-                color: "#2E2823",
-            },
+        "& .MuiOutlinedInput-notchedOutline": {
+            borderColor: "2E2823",
         },
-    };
-    const labelStyle = {
-        "&.Mui-focused": {
-            color: "#493E37"
-        }
+        "&.Mui-focused .MuiInputLabel-root": {
+            color: "#2E2823",
+        },
     }
 
-    const handleGameChange = (event) => {
-        const {
-            target: { value },
-        } = event;
-        let game = filtGames.find((game) => game.name === value)
+    const handleGameChange = (e, value) => {
+        let game = filtGames.find((game) => game.name === value.name)
         setCurrGame(game)
     }
 
+    useEffect(() => {
+        setCurrGame(filtGames[0])
+    }, [])
+
     return (
-        <FormControl sx={formStyle}>
-            <InputLabel id="game-ddl-label" sx={labelStyle}>Games</InputLabel>
-            <Select
-                id="game-ddl-label"
-                sx={selectStyle}
-                value={currGame.name}
-                input={<OutlinedInput label="Games" />}
-                onChange={handleGameChange}
-                MenuProps={MenuProps}
-            >
-                {filtGames.map((game) => (
-                    <MenuItem
-                        key={game.id}
-                        value={game.name}
-                    >
-                        {game.name}
-                    </MenuItem>
-                ))}
-            </Select>
-        </FormControl>
+        <Autocomplete
+            sx={autoStyle}
+            disableClearable={true}
+            options={filtGames}
+            value={currGame.name}
+            disablePortal
+            defaultValue={placeholder}
+            onChange={handleGameChange}
+            autoHighlight
+            getOptionLabel={(option) => option.name || currGame.name}
+            renderOption={(props, option) => (
+                <Box
+                    component="li"
+                    sx={{ "& > img": { mr: 1, flexShrink: 0 } }}
+                    {...props}
+                    key={option.id}
+                >
+                    {option.name}
+                </Box>
+            )}
+            renderInput={(params) => (
+                <TextField
+                    {...params}
+                    label={placeholder}
+                    inputProps={{
+                        ...params.inputProps,
+                        autoComplete: "new-password",
+                    }}
+                />
+            )}
+            ListboxProps={{
+                style: {
+                    background: "#8E7A6B",
+                    maxHeight: "11rem",
+                    color: "#2E2823",
+                },
+            }}
+        />
     );
 };
 
