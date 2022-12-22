@@ -7,6 +7,7 @@ import Login from "./Pages/Login/Login"
 import EnterScore from "./Pages/EnterScore/EnterScore";
 import Recent from "./Pages/Recent/Recent";
 import Admin from "./Pages/Admin/Admin";
+import Settings from "./Pages/Settings/Settings";
 import {
   Box, Typography, TextField, Button, ThemeProvider
 } from "@mui/material";
@@ -110,6 +111,7 @@ const App = () => {
         {pageState === "enterScore" && <EnterScore currUser={currUser} setPageState={setPageState} games={games} scores={scores} />}
         {pageState === "recent" && <Recent currUser={currUser} setPageState={setPageState} scores={scores} users={users} />}
         {pageState === "admin" && <Admin currUser={currUser} setPageState={setPageState} games={games} users={users} />}
+        {pageState === "settings" && <Settings currUser={currUser} setPageState={setPageState} />}
       </div>
     </div>
   );
