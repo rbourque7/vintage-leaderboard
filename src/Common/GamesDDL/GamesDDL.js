@@ -9,6 +9,7 @@ const GamesDDL = ({ games, currGame, setCurrGame, placeholder }) => {
 
     const autoStyle = {
         mt: "1rem",
+        mb: "1rem",
         background: "#8E7A6B",
         width: 250,
         color: "#2E2823",

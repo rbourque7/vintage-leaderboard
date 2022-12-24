@@ -281,7 +281,7 @@ const Main = ({ currUser, users, games, scores, setPageState, setGames, setScore
             <Box sx={mainAreaStyle}>
                 <Box sx={leaderboarAreaStyle}>
                     {mobileView &&
-                        <Typography variant="h4" color="#2E2823" sx={{ fontWeight: 500 }}>
+                        <Typography variant="h4" color="#2E2823" sx={{ fontWeight: 700 }}>
                             Welcome, {currUser.firstName}
                         </Typography>
                     }

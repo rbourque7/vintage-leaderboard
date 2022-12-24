@@ -33,7 +33,7 @@ const App = () => {
 
   const logoutBtnStyle = {
     height: "100%",
-    width: mobileView ? "11rem" : "16rem",
+    width: mobileView ? "12rem" : "16rem",
     fontWeight: 600,
     background: "#493E37",
     "&:hover": {
@@ -54,7 +54,7 @@ const App = () => {
     fontWeight: 500,
   }
   const logoStyle = {
-    width: "10rem",
+    width: mobileView ? "9.5rem" : "10rem",
     height: "3.5rem",
   }
 

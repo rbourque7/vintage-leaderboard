@@ -11,8 +11,8 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 
 const EnterScore = ({ currUser, setPageState, games, scores }) => {
     const mobileView = useMediaQuery('(max-width:500px)');
-    const [game, setGame] = useState()
-    const [score, setScore] = useState()
+    const [game, setGame] = useState({ name: "", id: "" })
+    const [score, setScore] = useState("")
     const [isLoading, setIsLoading] = useState(false)
     const [showMsg, setShowMsg] = useState(false)
     const [isError, setIsError] = useState(false)
@@ -27,7 +27,7 @@ const EnterScore = ({ currUser, setPageState, games, scores }) => {
     }
     const topBox = {
         display: "flex",
-        justifyContent: "flex-start",
+        justifyContent: "center",
         mb: "2rem"
     }
     const bottomBox = {
@@ -110,6 +110,8 @@ const EnterScore = ({ currUser, setPageState, games, scores }) => {
         const {
             target: { value },
         } = event;
+        console.log(event)
+        console.log(value)
         let game = games.find((game) => game.name === value)
         setGame(game)
     }
@@ -121,8 +123,10 @@ const EnterScore = ({ currUser, setPageState, games, scores }) => {
         setScore(value)
     }
 
+    console.log(game)
+
     const submitScore = async () => {
-        if (score && game.id) {
+        if (!isNaN(score) && game.id) {
             setShowMsg(false)
             setIsLoading(true)
             let userScores = scores.filter((score) => score.userId === currUser.id)
@@ -153,6 +157,9 @@ const EnterScore = ({ currUser, setPageState, games, scores }) => {
                 setShowMsg(true)
                 setIsLoading(false)
             }
+        } else {
+            setIsError(true)
+            setShowMsg(true)
         }
     }
 
@@ -179,7 +186,7 @@ const EnterScore = ({ currUser, setPageState, games, scores }) => {
                                 <Select
                                     id="game-ddl-label"
                                     sx={selectStyle}
-                                    value={game}
+                                    value={game.name}
                                     input={<OutlinedInput label="Pick the Game" />}
                                     onChange={handleGameChange}
                                     MenuProps={MenuProps}

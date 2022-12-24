@@ -50,15 +50,15 @@ const Settings = ({ currUser, setPageState }) => {
         <Box sx={containerStyle}>
             <Box sx={topBox}>
                 <Button onClick={() => backToHome()} sx={buttonStyle}>
-                    <Typography variant="body1" color="#2E2823">
+                    <Typography variant="body1" color="#2E2823" sx={{ fontWeight: 500, fontSize: "1rem" }}>
                         Go Back
                     </Typography>
                 </Button>
-                <Typography variant="body1" color="#2E2823">
+                <Typography variant="body1" color="#2E2823" sx={{ fontWeight: 500, fontSize: "1.10rem" }}>
                     Your Email: {currUser.email}
                 </Typography>
                 <Button onClick={() => passwordReset()} sx={pButtonStyle}>
-                    <Typography variant="body1" color="#2E2823">
+                    <Typography variant="body1" color="#2E2823" sx={{ fontWeight: 500, fontSize: "1.10rem" }}>
                         RESET PASSWORD
                     </Typography>
                 </Button>
