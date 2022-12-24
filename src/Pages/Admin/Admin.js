@@ -266,7 +266,7 @@ const Admin = ({ currUser, setPageState, games, users }) => {
                     {selectionState === 1 &&
                         <Box sx={gameFormStyle}>
                             <Typography variant="h4" sx={{ fontSize: mobileView ? "1.25rem" : "1.75rem", fontWeight: 500, mt: "1rem" }}>
-                                Add a game
+                                Add a Game
                             </Typography>
                             <FormControl sx={{ m: 1, width: mobileView ? 250 : 500 }}>
                                 <Input sx={inputStyle} value={gameName} onChange={handleNameChange} placeholder="Game Name" />
@@ -281,7 +281,7 @@ const Admin = ({ currUser, setPageState, games, users }) => {
                     {selectionState === 2 &&
                         <Box sx={gameFormStyle}>
                             <Typography variant="h4" sx={{ fontSize: mobileView ? "1.25rem" : "1.75rem", fontWeight: 500, mt: "1rem" }}>
-                                Add a game
+                                Add a User
                             </Typography>
                             <FormControl sx={{ m: 1, width: mobileView ? 250 : 500 }}>
                                 <Input sx={inputStyle} value={firstName} onChange={handlefNameChange} placeholder="First Name" />

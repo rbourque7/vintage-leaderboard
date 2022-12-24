@@ -29,7 +29,11 @@ const LeaderboardTile = ({ score, users, index, currUser }) => {
     }
     const rankStyle = {
         m: mobileView ? "0 1rem 0 0.66rem" : "0 1.5rem 0 1rem",
-        fontWeight: 700
+        background: index < 3 && "#2E2823",
+        padding: index < 3 && "0.15rem",
+        fontWeight: 700,
+        borderRadius: index < 3 && "25px",
+        width: index < 3 && "1.5rem"
     }
     const rankStyleN = {
         fontSize: "0.8rem",
@@ -47,16 +51,21 @@ const LeaderboardTile = ({ score, users, index, currUser }) => {
         m: mobileView ? "0 1rem 0 0.33rem" : "0 1.5rem 0 1rem",
         fontWeight: 500
     }
-
+    const color = index === 0 ? "#D4AF37" : index === 1 ? "#C0C0C0" : index === 2 ? "#CD7F32" : "#2E2823"
+    console.log(color)
+    //D4AF37
+    //C0C0C0
+    //CD7F32
+    //2E2823
     return (
         <Box sx={tileStyle}>
-            <Box sx={{ display: "flex", alignItems: "center", height: "3rem" }}>
+            <Box sx={{ display: "flex", alignItems: "center", height: "3rem", color: ranking === 1 ? "D4AF37" : ranking === 2 ? "C0C0C0" : ranking === 3 ? "CD7F32" : "#2E2823" }}>
                 {index === "none" ?
                     <Typography variant="body1" sx={rankStyleN} color="#2E2823">
                         {score.name}
                     </Typography>
                     :
-                    <Typography variant="body1" sx={rankStyle} color="#2E2823">
+                    <Typography variant="body1" sx={rankStyle} color={color}>
                         {"#" + ranking}
                     </Typography>
                 }
